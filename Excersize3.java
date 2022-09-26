@@ -11,6 +11,12 @@ class Excersize3{
         int[] arrayToBeShifted = {2,23,124,241,5};
         shiftLeft(arrayToBeShifted);
         System.out.println("Shifted array: " + Arrays.toString(arrayToBeShifted));
+
+        int[] fizzArray = fizzArray3(1, 5);
+        System.out.println("FizzArray: " + Arrays.toString(fizzArray));
+
+        int[] threeConsecutiveArr = {3, 4, 5};
+        System.out.println("Three Consecutive: " + threeConsecutive(threeConsecutiveArr));
     }
 
     public static int sumDigits(String stringContainingDigits){
@@ -38,7 +44,23 @@ class Excersize3{
     public static int[] fizzArray3(int start, int end){
         int[] res = new int[end-start];
         for (int i = start; i < end; i++){
-
+            res[i-start] = i; 
         }
+        return res;
     } 
+
+    public static boolean threeConsecutive(int[] array){
+        int sequenceLength = 1;
+        for(int i = 1; i < array.length; i++){
+            if(array[i] == array[i-1]+1){
+                sequenceLength++;
+                if(sequenceLength == 3) return true;
+            } else {
+                sequenceLength = 1;
+            }
+        }
+        return false;
+    }
+
+    
 }
