@@ -1,21 +1,36 @@
+import java.util.Arrays;
+
 public class PlaylistExcersize {
     public static void main(String[] args) {
         Playlist playlist = new Playlist();
 
-        Song song = new Song("John Lemon", "Battery", 300);
-        Song song2 = new Song("Jonathon Lenon", "The bee let it", 300);
-        Song song3 = new Song("Steve Onion", "Mustard is good", 300);
+        Song song = new Song("John Lemon", "Battery", 2);
+        Song song2 = new Song("Jonathon Lenon", "The bee let it", 3);
+        Song song3 = new Song("Steve Onion", "Mustard is good", 1);
 
         playlist.addSong(song);
         playlist.addSong(song2);
+        playlist.addSong(song2);
         playlist.addSong(song3);
 
+        playlist.printSongs();
+        playlist.sortByLength();
+        playlist.printSongs();
+
+        playlist.playCurrentSong();
+        playlist.playPreviousSong();
+        playlist.playNextSong();
+        playlist.playNextSong();
+        playlist.playNextSong();
+        playlist.removeSong(song);
         playlist.playCurrentSong();
     }
 }
 
 class Playlist {
-    private Song[] songs = new Song[10];
+    private static int SONGS_SIZE_INCREMENT = 2;
+
+    private Song[] songs = new Song[SONGS_SIZE_INCREMENT];
     private int songsAddI = 0;
     private int songsPlayI = 0;
 
@@ -28,6 +43,8 @@ class Playlist {
         if(songsAddI == songs.length) expandSongsArr();
         songs[songsAddI] = song;
         songsAddI++;
+
+        System.out.printf("\"%s\" was added to playlist\n", song.title);
         return true;
     }
 
@@ -41,21 +58,24 @@ class Playlist {
     }
 
     private void expandSongsArr(){
-        final Song[] newSongsArr = new Song[songs.length + 10];
+        final Song[] newSongsArr = new Song[songs.length + SONGS_SIZE_INCREMENT];
 
-        for(int i = 0; i <= songsAddI; i++){
+        for(int i = 0; i < songsAddI; i++){
             newSongsArr[i] = songs[i];
         }
         songs = newSongsArr;
+
+        System.out.printf("***Expanded playlist size to %d***\n", songs.length);
     }
 
     public void playCurrentSong(){
         final Song song = songs[songsPlayI];
         if(song == null){
             System.out.println("Cannot play an empty playlist. Please, add a song.");
+            return;
         }
 
-        System.out.printf("Playing %s by %s\n", song.title, song.artist);
+        System.out.printf("Playing \"%s\" by %s\n", song.title, song.artist);
     }
 
     public void playNextSong(){
@@ -81,6 +101,46 @@ class Playlist {
         songsPlayI = newSongsPlayI;
         playCurrentSong();
     }
+
+    public void removeSong(Song song){
+        for(int i = 0; i < songsAddI; i++){
+            if(song == songs[i]){
+                songs[i] = null;
+                if(i <= songsPlayI) {
+                    songsPlayI -= 1;
+                }
+            }
+        }
+
+        removeEmptySpaces();
+    }
+
+    private void removeEmptySpaces(){
+        int moveDifference = 0;
+        for(int i = 0; i < songsAddI; i++){
+            songs[i + moveDifference] = songs[i];
+            if(songs[i] == null){
+                moveDifference -= 1;
+            }
+        }
+        if (songsAddI < songs.length){
+            songs[songsAddI-1] = null;
+        }
+        songsAddI += moveDifference;
+    }
+
+    public void sortByLength(){
+        songsPlayI = 0;
+        Arrays.sort(songs, (song1, song2) -> {
+            if(song1 == null) return Integer.MAX_VALUE;
+            if(song2 == null) return Integer.MIN_VALUE;
+            return ((Song) song1).length - ((Song) song2).length;
+        });
+    }
+
+    public void printSongs(){
+        System.out.println(Arrays.toString(songs));
+    }
 }
 
 class Song {
@@ -99,5 +159,11 @@ class Song {
         if (!(obj instanceof Song)) return false;
         Song compareTo = (Song) obj;
         return (this.artist == compareTo.artist) && (this.title == compareTo.title) && (this.length == compareTo.length);
+    }
+
+    @Override
+    public String toString() {
+        String string = String.format("%s by %s", title, artist);
+        return string;
     }
 }
