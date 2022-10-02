@@ -13,27 +13,26 @@ public class Store {
         final Food bread = new Food("bread", 25, true);
         final Food doplhinEarFiletMignon = new Food("doplhinEarFiletMignon", 100, false);
         final CleaningProduct soap = new CleaningProduct("soap", 17);
-
         assertEquals(25, bread.getPrice(shoppingCart));
         assertEquals(50, doplhinEarFiletMignon.getPrice(shoppingCart));
-
-
 
         shoppingCart.addItem(soap);
         shoppingCart.addItem(bread);
         shoppingCart.addItem(doplhinEarFiletMignon);
         shoppingCart.addItem(new CleaningProduct("vacuum cleaner", 2500));
-        
         assertEquals(2, shoppingCart.getAmtOfCleaningProducts());
         assertEquals(2592, shoppingCart.getTotalPrice());
 
         shoppingCart.addItem(soap);
         shoppingCart.addItem(soap);
         shoppingCart.addItem(soap);
-
         assertEquals(5, shoppingCart.getAmtOfCleaningProducts());
         assertEquals(2386.2, shoppingCart.getTotalPrice());
 
+        shoppingCart.removeProduct(soap);
+        assertEquals(4, shoppingCart.getAmtOfCleaningProducts());
+
+        assertEquals(true, shoppingCart.hasProduct(doplhinEarFiletMignon));
     }
 }
 
@@ -59,6 +58,14 @@ class ShoppingCart{
             totalPrice += product.getPrice(this);
         }
         return Math.round(totalPrice * 100) / 100d;
+    }
+
+    public void removeProduct(Product product){
+        products.remove(product);
+    }
+
+    public boolean hasProduct(Product product){
+        return products.contains(product);
     }
 }
 
