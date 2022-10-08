@@ -1,3 +1,4 @@
+package excersizes;
 import java.util.Arrays;
 
 public class PlaylistExcersize {
