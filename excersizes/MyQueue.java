@@ -46,7 +46,7 @@ public class MyQueue <E>{
     }
 
     private void shrink(){
-        int newCapacity = (int) (arr.length * MIN_LOAD_FACTOR);
+        int newCapacity = (int) (arr.length / CAPACITY_MULTIPLIER);
         if(newCapacity < MIN_CAPACITY) newCapacity = MIN_CAPACITY;
         final E[] newArr = (E[]) new Object[newCapacity];
 
@@ -74,11 +74,10 @@ class TestQueue{
     public static void main() {
         final MyQueue<Integer> queue = new MyQueue<Integer>();
 
-        addItems(queue, 7);
-        rmItems(queue, 6);
+        addItems(queue, 100);
         queue.print();
 
-        addItems(queue, 5);
+        rmItems(queue, 90);
         queue.print();
     }
 
