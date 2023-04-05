@@ -1,6 +1,7 @@
 #include "cpp-httplib/httplib.h"
 #include "NetworkResponse.h"
 #include "NetworkHandler.h"
+#include <iostream>
 
 NetworkResponse* downloadWebsite(){
     httplib::Client cli("http://google.com");
@@ -8,12 +9,12 @@ NetworkResponse* downloadWebsite(){
     auto res = cli.Get("/");
     if (res) {
 
-        NetworkResponse response(
+        NetworkResponse* response = new NetworkResponse(
             res->status,
             res->body
         );
         
-        return &response;
+        return response;
     } else {
         std::cerr << "Error: " << res.error() << std::endl;
     }
