@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+    <title>Form</title>
+</head>
+<body>
+    <form action="localhost:8080/submit" method="post">
+        <input type="text" name="name" placeholder="Name">
+        <input type="submit" value="Submit" onclick="handleSubmit(event)">
+    </form>
+    
+    <script>
+    function handleSubmit(event) {
+        const form = document.querySelector('form');
+    
+        if (form.elements['name'].value === '') event.preventDefault();
+    }
+    </script>
+      
+</body>
