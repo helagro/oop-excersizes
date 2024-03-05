@@ -1,4 +1,4 @@
-package excersizes;
+package dsa;
 import java.util.Arrays;
 
 public class PlaylistExcersize {
