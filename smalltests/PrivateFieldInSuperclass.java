@@ -1,3 +1,4 @@
+package smallTests;
 // package smalltests;
 // public class PrivateFieldInSuperclass {
 //     static private String johnCena = "You can't see me";

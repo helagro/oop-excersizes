@@ -1,4 +1,4 @@
-package smalltests;
+package smallTests;
 
 public class FinalParameter {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package smalltests;
+package smallTests;
 
 /*
  * FINDINGS: the @Override annotation doesn't do much, it is defining a method with the same signature that does everything
